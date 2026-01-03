@@ -1,0 +1,182 @@
+Time-Bound Digital Access Vault
+A full-stack secure web application that allows users to store sensitive text and share it using temporary, rule-based access links. The system enforces strict server-side validation for expiration times, view limits, and password protection.
+
+
+🚀 Features
+
+User Authentication: Secure registration and login using JWT (JSON Web Tokens).
+
+
+Secure Vaults: Create and manage sensitive text content with owner-specific access.
+
+
+
+Dynamic Share Links: * Set expiration time (in hours).
+
+Set maximum allowed views.
+
+Optional password protection for shared links.
+
+
+Audit Logs: Track every successful or denied access attempt, including timestamps and IP metadata.
+
+
+Auto-Invalidation: Links are automatically disabled once constraints (time or views) are met.
+
+🏗️ Architecture
+The project follows a RESTful API design with the backend as the single source of truth.
+
+
+
+
+Backend: Flask (Python).
+
+
+
+Database: SQLite with SQLAlchemy ORM.
+
+
+
+Security: Bcrypt for password hashing and JWT for session management.
+
+
+Frontend: Vanilla JavaScript (Fetch API) and HTML5.
+
+🛠️ Setup Instructions
+1. Prerequisites
+Ensure you have Python 3.x installed.
+
+2. Install Dependencies
+Install the required Python packages:
+
+Bash
+
+pip install -r requirements.txt
+3. Database Initialization
+The database schema is automatically created when the application starts for the first time.
+
+Python
+
+db.create_all()
+4. Run the Application
+Start the Flask server:
+
+Bash
+
+python app.py
+The server will run at http://127.0.0.1:5000.
+
+🔒 Security Design
+Unpredictable Links: Uses UUID4 (128-bit random hex strings) to prevent link guessing or brute-force attempts.
+
+
+Race-Condition Safety: Updates view counts within database transactions to handle simultaneous access attempts safely.
+
+
+Hashing: All passwords (user and link-based) are stored as salted Bcrypt hashes.
+
+
+Server-Side Truth: All validation (expiry, views, identity) is performed on the server; the frontend only displays the result.
+
+
+📂 Project Structure
+app.py: Main Flask application and API endpoints.
+
+\Challenge 1: Team Contribution Multiplier
+
+Logic Used
+
+A brute-force solution would use a loop inside another loop, which becomes slow.
+So instead, we use a smarter approach:
+
+First, we calculate the product of all elements on the left side of each index
+
+Then, we calculate the product of all elements on the right side
+
+Finally, we multiply both values to get the result for that index
+
+This way, we solve the problem using only two loops.
+
+
+Challenge 2: Password Recovery Window
+Logic Used (Sliding Window)
+
+The sliding window technique works best here.
+
+We use two pointers: left and right
+
+The right pointer expands the window to include required characters
+
+Once all required characters are present, we move the left pointer to shrink the window
+
+We keep updating the minimum window size whenever a valid window is found
+
+Challenge 3: Balanced Performance Score
+
+(Median of Two Sorted Arrays)
+Logic Used
+
+Merging the arrays would be easy, but it is not allowed.
+
+So instead:
+
+We apply binary search on the smaller array
+
+We partition both arrays in such a way that:
+
+Left and right halves are balanced
+
+All elements in the left half are smaller than or equal to those in the right half
+
+Once this condition is met, finding the median becomes simple.
+
+
+Challenge 4: Deep Storage Inventory Search
+
+(Kth Smallest Element in Sorted Matrix)
+Logic Used (Min Heap)
+
+Each row can be treated as a sorted list.
+
+Steps:
+
+Insert the first element of every row into a min heap
+
+Remove the smallest element from the heap
+
+Insert the next element from the same row
+
+Repeat this process k times
+
+The kᵗʰ element removed from the heap is the answer.
+
+
+Challenge 5: Fix the Broken Expression
+Logic Used
+
+First, we count how many extra opening and closing parentheses need to be removed.
+
+Then we use backtracking:
+
+Try all possible valid combinations
+
+Never remove letters
+
+Keep the parentheses balanced
+
+Use a set to avoid duplicate answers
+
+Challenge 6: Tower of Hanoi
+Logic Used (Recursion)
+
+The Tower of Hanoi problem is best solved using recursion because the problem can be broken down into smaller similar problems.
+
+For N disks, the logic is:
+
+Move N−1 disks from rod A to rod B, using rod C as helper
+
+Move the largest disk (Nth disk) from rod A to rod C
+
+Move the N−1 disks from rod B to rod C, using rod A as helper
+
+The same steps are repeated recursively until only one disk is left.
