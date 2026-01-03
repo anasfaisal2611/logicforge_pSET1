@@ -1,56 +1,34 @@
-def removeInvalidParentheses(expr):
-    result = set()
+import heapq
 
-    # Step 1: Count extra parentheses
-    left_rem = right_rem = 0
-    for ch in expr:
-        if ch == '(':
-            left_rem += 1
-        elif ch == ')':
-            if left_rem == 0:
-                right_rem += 1
-            else:
-                left_rem -= 1
+def kthSmallest(matrix, k):
+    n = len(matrix)
+    
+    # Min-heap banayenge
+    heap = []
+    
+    # Step 1: har row ka first element heap mein daalo
+    for row in range(n):
+        # (value, row_index, column_index)
+        heapq.heappush(heap, (matrix[row][0], row, 0))
+    
+    # Step 2: k times pop karo
+    for _ in range(k):
+        value, r, c = heapq.heappop(heap)
+        
+        # Step 3: agar us row mein next element hai
+        if c + 1 < n:
+            heapq.heappush(heap, (matrix[r][c + 1], r, c + 1))
+    
+    return value
 
-    # Step 2: Backtracking
-    def backtrack(index, left_count, right_count, left_rem, right_rem, path):
-        # End of string
-        if index == len(expr):
-            if left_rem == 0 and right_rem == 0:
-                result.add(path)
-            return
 
-        ch = expr[index]
-
-        # Option 1: Remove current parenthesis
-        if ch == '(' and left_rem > 0:
-            backtrack(index + 1, left_count, right_count,
-                      left_rem - 1, right_rem, path)
-
-        if ch == ')' and right_rem > 0:
-            backtrack(index + 1, left_count, right_count,
-                      left_rem, right_rem - 1, path)
-
-        # Option 2: Keep character
-        if ch not in "()":
-            backtrack(index + 1, left_count, right_count,
-                      left_rem, right_rem, path + ch)
-
-        elif ch == '(':
-            backtrack(index + 1, left_count + 1, right_count,
-                      left_rem, right_rem, path + ch)
-
-        elif ch == ')' and right_count < left_count:
-            backtrack(index + 1, left_count, right_count + 1,
-                      left_rem, right_rem, path + ch)
-
-    backtrack(0, 0, 0, left_rem, right_rem, "")
-    return list(result)
+# 🔽 Client Code / Driver Code
 if __name__ == "__main__":
-    expr = input("Enter expression: ")
-
-    result = removeInvalidParentheses(expr)
-
-    print("Valid expressions with minimum removals:")
-    for s in result:
-        print(s)
+    matrix = [
+        [1, 5, 9],
+        [10, 11, 13],
+        [12, 13, 15]
+    ]
+    k = 8
+    
+    print("Kth smallest element is:", kthSmallest(matrix, k))
